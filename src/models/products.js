@@ -45,7 +45,12 @@ var productSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId, ref: 'User',
         required: true
     },
-    updateAt: Date
+    created_by: {
+        type: Date,
+    },
+    updated_by: {
+        type: Date,
+    },
 }, { timestamps: true });
 
 //Export the model
