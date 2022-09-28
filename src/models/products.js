@@ -26,6 +26,14 @@ var productSchema = new mongoose.Schema({
     offer: {
         type: Number
     },
+    color: [{
+        name: String,
+        // image:String
+    }],
+    size: [{
+        val: Number,
+        // price:Number
+    }],
     productPicture: [
         {
             img: { type: String }
@@ -45,12 +53,12 @@ var productSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId, ref: 'User',
         required: true
     },
-    created_by: {
-        type: Date,
-    },
-    updated_by: {
-        type: Date,
-    },
+    // created_by: {
+    //     type: Date,
+    // },
+    // updated_by: {
+    //     type: Date,
+    // },
 }, { timestamps: true });
 
 //Export the model

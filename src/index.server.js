@@ -2,11 +2,13 @@ const express = require('express');
 const app = express();
 require('dotenv').config();
 app.use(express.json());
+var cookieParser = require('cookie-parser');
+app.use(cookieParser(process.env.JWT_SECRET));
 
 //routes
-const authRoutes = require('./routes/user');
-const authAdminRoutes = require('./routes/admin/auth');
-const categoryRoutes = require('./routes/category');
+const authRoutes = require('./routes/user.routes');
+const authAdminRoutes = require('./routes/admin/admin.routes');
+const categoryRoutes = require('./routes/category.routes');
 const productRoutes = require('./routes/product');
 const cartRoutes = require('./routes/cart');
 
