@@ -2,6 +2,7 @@
 const Product = require('../models/products.model')
 const slugify = require('slugify')
 
+// Create and Save a new Product
 exports.createProduct = (req, res) => {
     if (!req.body) {
         return res.status(400).send({
@@ -26,7 +27,7 @@ exports.createProduct = (req, res) => {
         color,
         size,
         category,
-        createBy: req.user._id
+        createBy: req.user.id
     })
 
     product.save(((err, product) => {
@@ -39,23 +40,58 @@ exports.createProduct = (req, res) => {
 
 }
 
-const getProduct = async (req, res) => {
-    try {
-        const product = await Product.find({})
-        if (!product) {
-            return res.status(404).json({ error: "Product Not Found" })
-        }
-
-        return res.status(200).json({
-            message: "Product Found",
-            product
+// Retrieve all Product from the database.
+exports.getProduct = async (req, res) => {
+    Product.find({})
+        .populate("category", "name")
+        .populate("createBy", "username email -_id")
+        .exec((error, product) => {
+            if (!product) {
+                return res.status(404).json({ error: "Product Not Found" })
+            }
+            return res.status(200).json({
+                message: "Product Found",
+                product
+            })
         })
-
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ message: "Internal Server Error" })
-    }
-
 }
 
-module.exports.getProduct = getProduct
+// Find a single Product with an id
+exports.findOne = async (req, res) => {
+    const id = req.params.productId;
+    Product.findById(id)
+        .populate("category", "name")
+        .populate("createBy", "username email -_id")
+        .exec((error, product) => {
+            if (!product) {
+                return res.status(404).send({ message: "Not found Product with id " + id });
+            }
+            return res.status(200).json({
+                message: "Found Product with id " + id,
+                product
+            });
+        })
+};
+
+
+exports.deleteProduct = (req, res) => {
+    const id = req.params.productId;
+
+    Product.findByIdAndRemove(id)
+        .then(data => {
+            if (!data) {
+                res.status(404).send({
+                    message: `Cannot delete Product with id=${id}. Maybe Tutorial was not found!`
+                });
+            } else {
+                res.send({
+                    message: "Product was deleted successfully!"
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Could not delete Tutorial with id=" + id
+            });
+        });
+};
