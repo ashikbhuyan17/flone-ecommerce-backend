@@ -3,7 +3,11 @@ const Product = require('../models/products.model')
 const slugify = require('slugify')
 
 exports.createProduct = (req, res) => {
-    console.log(req.body)
+    if (!req.body) {
+        return res.status(400).send({
+            message: "Data to post can not be empty!"
+        });
+    }
 
     const { name, price, description, offer, reviews, category, quantity, color, size } = req.body
     let productPicture = []
