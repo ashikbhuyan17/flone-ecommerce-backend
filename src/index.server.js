@@ -9,7 +9,7 @@ app.use(cookieParser(process.env.JWT_SECRET));
 const authRoutes = require('./routes/user.routes');
 const authAdminRoutes = require('./routes/admin/admin.routes');
 const categoryRoutes = require('./routes/category.routes');
-const productRoutes = require('./routes/product');
+const productRoutes = require('./routes/product.routes');
 const cartRoutes = require('./routes/cart');
 
 

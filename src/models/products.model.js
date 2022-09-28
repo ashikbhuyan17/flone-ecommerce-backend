@@ -11,7 +11,7 @@ var productSchema = new mongoose.Schema({
         unique: true
     },
     price: {
-        type: Number,
+        type: String,
         required: true
     },
     quantity: {
@@ -27,12 +27,10 @@ var productSchema = new mongoose.Schema({
         type: Number
     },
     color: [{
-        name: String,
-        // image:String
+        type: String
     }],
     size: [{
-        val: Number,
-        // price:Number
+        type: String
     }],
     productPicture: [
         {
@@ -51,15 +49,11 @@ var productSchema = new mongoose.Schema({
     },
     createBy: {
         type: mongoose.Schema.Types.ObjectId, ref: 'User',
-        required: true
+        // required: true
     },
-    // created_by: {
-    //     type: Date,
-    // },
-    // updated_by: {
-    //     type: Date,
-    // },
-}, { timestamps: true });
+    created_at: { type: Date, default: Date.now },
+    updated_at: { type: Date, default: Date.now },
+}, { timestamps: false });
 
 //Export the model
 module.exports = mongoose.model('Product', productSchema);
