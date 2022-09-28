@@ -1,4 +1,4 @@
-const Category = require("../models/category")
+const Category = require("../models/category.model")
 const slugify = require('slugify')
 
 
