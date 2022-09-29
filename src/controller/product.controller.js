@@ -10,7 +10,7 @@ exports.createProduct = (req, res) => {
         });
     }
 
-    const { name, price, description, offer, reviews, category, quantity, color, size } = req.body
+    const { name, price, description, discount, reviews, category, quantity, color, size, rating } = req.body
     let productPicture = []
     if (req.files.length > 0) {
         productPicture = req.files.map((file) => {
@@ -27,8 +27,11 @@ exports.createProduct = (req, res) => {
         color,
         size,
         category,
+        rating,
+        discount,
         createBy: req.user.id
     })
+    console.log("product", product)
 
     product.save(((err, product) => {
         if (err) return res.status(400).json({ err })

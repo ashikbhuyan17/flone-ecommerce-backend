@@ -11,7 +11,7 @@ var productSchema = new mongoose.Schema({
         unique: true
     },
     price: {
-        type: String,
+        type: Number,
         required: true
     },
     quantity: {
@@ -23,7 +23,7 @@ var productSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    offer: {
+    discount: {
         type: Number
     },
     color: [{
@@ -37,16 +37,17 @@ var productSchema = new mongoose.Schema({
             img: { type: String }
         }
     ],
+    rating: { type: String },
     reviews: [
         {
             userId: { type: mongoose.Schema.ObjectId, ref: 'User' },
             review: String
         }
     ],
-    category: {
+    category: [{
         type: mongoose.Schema.Types.ObjectId, ref: 'Category',
         required: true
-    },
+    }],
     createBy: {
         type: mongoose.Schema.Types.ObjectId, ref: 'User',
         required: true
