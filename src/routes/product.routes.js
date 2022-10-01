@@ -24,7 +24,9 @@ const upload = multer({ storage })
 
 router
     .route('/product')
-    .post(requireSignIn, adminMiddleware, upload.array('productPicture'), createProduct)
+    // .post(requireSignIn, adminMiddleware, upload.array('image'), createProduct)
+    .post(requireSignIn, adminMiddleware, createProduct)
+
     .get(getProduct)
 
 router

@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
+const uuidv4 = require('uuid');
+
 var productSchema = new mongoose.Schema({
+    // _id: { type: String, default: uuidv4 },
     name: {
         type: String,
         required: true,
@@ -14,30 +17,52 @@ var productSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    discount: {
+        type: Number
+    },
+    offerEnd: {
+        type: Date
+    },
+    newProduct: {
+        type: Boolean
+    },
+    rating: { type: Number },
+    saleCount: {
+        type: Number
+    },
+    tag: [{
+        type: String
+    }],
     quantity: {
         type: Number,
         required: true
     },
-    description: {
+    shortDescription: {
+        type: String
+    },
+    fullDescription: {
         type: String,
         required: true,
         trim: true
     },
-    discount: {
-        type: Number
-    },
-    color: [{
-        type: String
+    variation: [{
+        color: String,
+        size: [{
+            name: String,
+            stoke: Number
+        }]
     }],
-    size: [{
-        type: String
-    }],
-    productPicture: [
+    // color: [{
+    //     type: String
+    // }],
+    // size: [{
+    //     type: String
+    // }],
+    image: [
         {
             img: { type: String }
         }
     ],
-    rating: { type: String },
     reviews: [
         {
             userId: { type: mongoose.Schema.ObjectId, ref: 'User' },
@@ -52,9 +77,7 @@ var productSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId, ref: 'User',
         required: true
     },
-    created_at: { type: Date, default: Date.now },
-    updated_at: { type: Date, default: Date.now },
-}, { timestamps: false });
+}, { timestamps: true });
 
 //Export the model
 module.exports = mongoose.model('Product', productSchema);

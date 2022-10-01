@@ -10,25 +10,34 @@ exports.createProduct = (req, res) => {
         });
     }
 
-    const { name, price, description, discount, reviews, category, quantity, color, size, rating } = req.body
-    let productPicture = []
-    if (req.files.length > 0) {
-        productPicture = req.files.map((file) => {
-            return { img: file.filename }
-        })
-    }
+    const { name, price, discount, offerEnd, newProduct, rating, saleCount, tag, quantity, shortDescription, fullDescription, category, variation } = req.body
+    // let image = []
+    // if (req.files.length > 0) {
+    //     image = req.files.map((file) => {
+    //         return { img: file.filename }
+    //     })
+    // }
+    let image = [
+        {
+            img: "wVkV2vRN_-t-shirt-04.png"
+        }
+    ]
     const product = new Product({
         name,
         slug: slugify(name),
         price,
-        quantity,
-        description,
-        productPicture,
-        color,
-        size,
-        category,
-        rating,
         discount,
+        offerEnd,
+        newProduct,
+        rating,
+        saleCount,
+        tag,
+        quantity,
+        shortDescription,
+        fullDescription,
+        category,
+        variation,
+        image,
         createBy: req.user.id
     })
     console.log("product", product)
